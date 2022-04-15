@@ -18,6 +18,8 @@ const Form = ({ currentId, setCurrentId }) => {
     selectedFile: "",
   });
 
+  const user = JSON.parse(localStorage.getItem("profile"))?.user?.name;
+
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
@@ -25,6 +27,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
 
   const clear = () => {
+    setCurrentId(null);
     setPostData({
       creator: "",
       title: "",
@@ -32,19 +35,29 @@ const Form = ({ currentId, setCurrentId }) => {
       tags: "",
       selectedFile: "",
     });
-    setCurrentId(null);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (currentId) {
-      dispatch(updatePost(currentId, postData));
+    if (!currentId) {
+      dispatch(createPost({ ...postData, name: user }));
+      clear();
     } else {
-      dispatch(createPost(postData));
+      dispatch(updatePost(currentId, { ...postData, name: user }));
+      clear();
     }
-    clear();
   };
+
+  if (!user) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please Sign In to create your own memories and like other's memories.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -57,16 +70,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? "Editing" : "Creating"} a memory
         </Typography>
-        <TextField
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-        />
+
         <TextField
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
@@ -80,6 +84,8 @@ const Form = ({ currentId, setCurrentId }) => {
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
           }
+          multiline
+          rows={4}
           name="message"
           variant="outlined"
           label="Message"
