@@ -17,9 +17,9 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
     borderRadius: 15,
     marginBottom: "1rem",
-    padding: "16px",
+    padding: "16px 16px 0 16px",
     [theme.breakpoints.down("sm")]: {
-      marginBottom: "0rem",
+      marginBottom: "10px",
       padding: "6px",
     },
   },
