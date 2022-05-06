@@ -14,7 +14,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import SettingsIcon from "@material-ui/icons/Settings";
 import moment from "moment";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
-import { deletePost, likePost } from "../../../actions/posts";
+import { deletePost, getPosts, likePost } from "../../../actions/posts";
 import useStyles from "./styles";
 
 const Post = ({ post, setCurrentId }) => {
@@ -62,6 +62,11 @@ const Post = ({ post, setCurrentId }) => {
     } else {
       setLikes([...post.likes, userId]);
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deletePost(post._id));
+    dispatch(getPosts());
   };
 
   return (
@@ -119,11 +124,7 @@ const Post = ({ post, setCurrentId }) => {
           <Likes />
         </Button>
         {(user?.googleId === post?.creator || user?._id === post?.creator) && (
-          <Button
-            size="small"
-            color="secondary"
-            onClick={() => dispatch(deletePost(post._id))}
-          >
+          <Button size="small" color="secondary" onClick={handleDelete}>
             <DeleteIcon fontSize="small" /> &nbsp; Delete
           </Button>
         )}
