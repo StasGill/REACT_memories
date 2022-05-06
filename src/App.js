@@ -12,8 +12,8 @@ function App() {
       <Container maxWidth="xl" disableGutters>
         <NavBar />
         <Switch>
-          <Route path="/" exact render={(props) => <Redirect to="/posts" />} />
-          <Route path="/posts" exact render={(props) => <Home {...props} />} />
+          {/* <Route path="/" exact render={(props) => <Redirect to="/posts" />} /> */}
+          <Route path="/" exact render={(props) => <Home {...props} />} />
           <Route
             path="/posts/search"
             exact

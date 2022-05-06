@@ -17,6 +17,7 @@ import decode from "jwt-decode";
 import LogoMain from "../../images/LogoMain";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useWindowSize } from "../../helper/useWindowSize";
+import { getPosts } from "../../actions/posts";
 
 export const NavBar = () => {
   const classes = useStyles();
@@ -28,6 +29,10 @@ export const NavBar = () => {
 
   const size = useWindowSize();
   const isMobile = size.width < 700;
+
+  const mainPage = () => {
+    dispatch(getPosts());
+  };
 
   const logOut = useCallback(() => {
     dispatch({ type: LOGOUT });
@@ -54,6 +59,7 @@ export const NavBar = () => {
       <div className={classes.brandContainer}>
         <Typography
           component={Link}
+          onClick={mainPage}
           to="/"
           className={classes.heading}
           variant="h3"
