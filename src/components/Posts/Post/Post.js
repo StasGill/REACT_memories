@@ -64,8 +64,8 @@ const Post = ({ post, setCurrentId }) => {
     }
   };
 
-  const handleDelete = () => {
-    dispatch(deletePost(post._id));
+  const handleDelete = async () => {
+    await dispatch(deletePost(post._id));
     dispatch(getPosts());
   };
 
