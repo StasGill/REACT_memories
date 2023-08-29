@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://places-a.herokuapp.com/";
+const url = "https://memories-a.onrender.com";
 
 const API = axios.create({ baseURL: url });
 
